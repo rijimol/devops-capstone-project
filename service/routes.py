@@ -4,7 +4,6 @@ Account Service
 This microservice handles the lifecycle of Accounts
 """
 import unittest
-BASE_URL = "/accounts"
 
 # pylint: disable=unused-import
 from flask import jsonify, request, make_response, abort, url_for   # noqa; F401
@@ -154,6 +153,7 @@ def check_content_type(media_type):
 ######################################################################
 # EXTRA STEPS FOR TESTING AND LINT FIX
 ######################################################################
+BASE_URL = "/accounts"
 
 
 class AccountTestCase(unittest.TestCase):
@@ -161,7 +161,7 @@ class AccountTestCase(unittest.TestCase):
     def setUp(self):
         from . import app
         self.client = app.test_client()
-    
+
     def test_get_account_not_found(self):
         """It should not Read an Account that is not found"""
         resp = self.client.get(f"{BASE_URL}/0")
