@@ -10,11 +10,19 @@ from flask import jsonify, request, make_response, abort, url_for   # noqa; F401
 from service.models import Account
 from service.common import status  # HTTP Status Codes
 from . import app  # Import Flask application
+from flask_talisman import Talisman
+from flask_cors import CORS
 
+# ------------------- ADDED FOR SECURITY -------------------
+Talisman(app)
+CORS(app)
+# --
 
 ############################################################
 # Health Endpoint
 ############################################################
+
+
 @app.route("/health")
 def health():
     """Health Status"""
@@ -154,6 +162,8 @@ def check_content_type(media_type):
 # EXTRA STEPS FOR TESTING AND LINT FIX
 ######################################################################
 BASE_URL = "/accounts"
+
+HTTPS_ENVIRON = {'wsgi.url_scheme': 'https'}
 
 
 class AccountTestCase(unittest.TestCase):
